@@ -1,0 +1,18 @@
+# How to create tables based on data
+
+sqlite3 SwissProt.sqlite
+
+CREATE TABLE swissprot ( accnr CHAR (7) PRIMARY KEY, description VARCHAR (240), taxid INTEGER (8), location VARCHAR (50), interpro VARCHAR (310), pfam VARCHAR (130), go_c VARCHAR (240), go_f VARCHAR (200), go_p VARCHAR (1100), ec VARCHAR (170), sequence TEXT );
+
+.import sprot.tab swissprot
+
+# create and populate the taxonomy table
+
+CREATE TABLE taxonomy (taxid INTEGER (7) PRIMARY KEY, tax_path VARCHAR (910));
+.import taxonomy.tab taxonomy
+
+# converting values to true null values
+
+SELECT COUNT (location) FROM swissprot;
+UPDATE swissprot SET location = null WHERE location = "null";
+SELECT COUNT (location) FROM swissprot;
